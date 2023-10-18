@@ -1,0 +1,21 @@
+body {
+    /* 背景顏色 */
+    background-color: black;
+    /* 設定 body 彈性排版 */
+    display: flex;
+    /* 內元素水平置中 */
+    justify-content: center;
+    /* 文字顏色 */
+    color: white;
+}
+
+div {
+    /* 寬度設定 */
+    width: 1000px;
+    /* 框限設定 3 像素寬、白色實線 */
+    border: 3px solid white;
+    /* 外距靠上 100 像素 */
+    margin-top: 100px;
+    /* 內距 50 像素 */
+    padding: 50px;
+}

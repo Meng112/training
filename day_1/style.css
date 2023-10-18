@@ -1,0 +1,30 @@
+button {
+    /* 左右間距各 1 像素 */
+    margin-left: 1px;
+    margin-right: 1px;
+    /* 下間距 15 像素 */
+    margin-bottom: 15px;
+}
+table {
+    /* 框線 1 像素，黑色實線 */
+    border: 1px solid black;
+    /* 多個表格線共用一條 */
+    border-collapse: collapse;
+    /* 表格寬 */
+    width: 330px;
+    /* 平均分配欄寬 */
+    table-layout: fixed;
+}
+th, tr, td{
+    /* 框線 1 像素，黑色實線 */
+    border: 1px solid black;
+    /* 多個表格線共用一條 */
+    border-collapse: collapse;
+}
+th {
+    /* 文字靠左對齊 */
+    text-align: left;
+}
+.tall {
+    height: 90px;
+}

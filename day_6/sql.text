@@ -1,0 +1,34 @@
+// 刪除欄位
+$drop_column = "ALTER TABLE db_name DROP COLUMN column_name";
+// 查詢 SQL 是否有更改欄位成功
+if (mysqli_query($connect, $drop_column)) {
+    echo "刪除成功<br>";
+} else {
+    echo "刪除失敗: " . mysqli_error($connect) ."<br>";
+}
+
+// 修改欄位
+$modify_column = "ALTER TABLE db_name CHANGE COLUMN IF EXISTS column_name data_type";
+// 查詢 SQL 是否有更改欄位成功
+if (mysqli_query($connect, $modify_column)) {
+    echo "修改成功<br>";
+} else {
+    echo "修改失敗: " . mysqli_error($connect) ."<br>";
+}
+
+// 新增欄位
+$add_column = "ALTER TABLE db_name ADD COLUMN column_name data_type";
+// 查詢 SQL 是否有更改欄位成功
+if (mysqli_query($connect, $add_column)) {
+    echo "新增成功<br>";
+} else {
+    echo "新增失敗: " . mysqli_error($connect) ."<br>";
+}
+
+// 刪除資料表
+$drop_table = "DROP TABLE IF EXISTS db_test";
+if ($connect->query($drop_table) === TRUE) {
+    echo "删除成功<br>";
+} else {
+    echo "錯誤: " . $connect->error . "<br>";
+}
