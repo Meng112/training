@@ -58,8 +58,6 @@ for ($i = 1; $i < 11; $i++) { // 建立 item 1-10
 // // 取得下限值
 // $lower_value = $data["lower"];
 
-$upper_value;
-$lower_value;
 // 新增資料到欄位中
 // 格式化時間
 $current_time = date("H:i:s");
@@ -95,7 +93,6 @@ if ($join = $connect->prepare($insert_query)) {
         // // 關閉檔案
         // fclose($file);
     }
-    echo $upper_value . "/" . $lower_value;
     // 產生亂數資料
     $data = array($current_time); // 先把時間放進來
     for ($i = 0; $i < 10; $i++) { // 產生 10 筆亂數

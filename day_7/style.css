@@ -75,6 +75,7 @@ div {
     padding-top: 2px;
     padding-bottom: 2px;
 }
+
 /* 滾動條背景顏色 */
 .container_table::-webkit-scrollbar-track {
     background: rgb(111 183 183);

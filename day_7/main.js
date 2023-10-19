@@ -135,6 +135,9 @@ start.className = "start";
 let sto = document.createElement("button");
 // 更改停止按鈕內文
 sto.innerText = "停止";
+// 開始按鈕預設關閉
+sto.disabled = true;
+sto.style.display = 'none';
 
 // 將第三列內容加入 div (bottom_row)
 bottom_row.appendChild(refresh); // 加入 refresh-div
@@ -145,6 +148,7 @@ bottom_row.appendChild(sto); // 加入 sto-button
 container.appendChild(top_row);
 container.appendChild(middle_row);
 container.appendChild(bottom_row);
+
 // ---------------------------------------------table-------------------------------------------------------
 // 建立包裹 table 的 div: container_table
 let container_table = document.createElement("div");
@@ -206,50 +210,112 @@ for (let i = 0; i < 6; i++) {
     // 創建 th 標題
     let th = document.createElement("th");
     // 賦予 th 標題值
-    // th.innerText = "標題";
+    th.innerText = "標題";
     // 將 th 標題加入 tr_header 標題列中
     tr_header.appendChild(th);
 }
 // 將 tr_header 標題列加入 thead 中
 thead.appendChild(tr_header);
-// ----------------------------------------向 get_data.php 取得資料的函式------------------------------------
-let refresh_data = function () {
-    // 使用 ajax 從 php 取得資料
-    // 根據初始設定值，向 get_data.php 取資料，並顯示在表格內 (資料依照 select 的 option 變動)
-    // 建立新的 ajax 請求
-    let request_g = new XMLHttpRequest();
-    request_g.onreadystatechange = function () { // 當 readyState 改變時 (readyState 表示 XMLHttpRequest 的狀態)
-        if (this.readyState == 4 && this.status == 200) {
-            // 取得從 get_data.php 得到的資料
-            let get_data = request_g.responseText;
-            // 將得到的資料轉換為 json
-            let datas = JSON.parse(get_data); // 所有資料庫的資料
-            // 反轉 datas 陣列 (把最新的資料移到前面)
-            datas = datas.reverse();
-            // 顯示初始資料筆數
-            // 取得 tbody 裡面的所有 tr
-            trs = tbody.childNodes;
-            // 取得所有 tr 裡面的 td
-            for (let i = 0; i < trs.length; i++) { // i: 所有 tr 的列編號
-                let tds = trs[i].childNodes; // 每個 tr 裡面的 td
-                for (let j = 0; j < tds.length; j++) { // j: td 的 index
-                    // 將取得的資料值給 td
-                    tds[j].innerText = datas[i][j];
-                }
-            };
-            // 將 select 的 option 跟資料作連動
-            for (let i = 0; i < all_select.length; i++) { // 取得所有的 select
-                // 取得每個 select 選擇的值
-                // console.log("當前選擇的值: " + all_select[i].value);
-                // 將 th 標題的內文與 select 的 option 相同
-                if (i == 0) { // 如果是第一個標題 (資瞭表 1)
+
+// -----------------------------------------------------tbody------------------------------------------------
+// 創建多行 tr_data 資料列
+// 總共想創建的 tr_data 資料行數 (預設 40 行)
+let tr_data;
+let total_records = 40;
+for (let i = 0; i < total_records; i++) {
+    // 創建 tr_data 資料列
+    tr_data = document.createElement("tr");
+    // 創建 td 資料格新增到 tr_data 資料列
+    for (let j = 0; j < 6; j++) {
+        // 創建 td 資料格
+        let td = document.createElement("td");
+        // 將 td 資料格新增到 tr_data 資料列
+        td.innerText = "資料";
+        tr_data.appendChild(td);
+    };
+    // 將 tr_data 新增到 tbody
+    tbody.appendChild(tr_data);
+};
+
+// --------------------------------------------------加入到 body----------------------------------------
+// 將 container 加入 body
+document.body.appendChild(container);
+// 將 select_store 加入 body
+document.body.appendChild(select_store);
+// 將 container_table 加入 body
+document.body.appendChild(container_table);
+
+// -------------------------------------------scrollbar (初始)-------------------------------------
+// 設定可視行 (總行數/2) 行
+// 取得 table 的高
+let table_tall = document.getElementsByTagName('table')[0].offsetHeight;
+// 設定包裹住 table 的 div (container_table) 的高為 table 的高的一半再加上一半高度的 td
+// container_table.style.height = ((table_tall / 2) - 55) + "px";
+container_table.style.height = ((total_records + 4) * 22) / 2 + 20 + "px";
+
+// ----------------------------------------------初始資料----------------------------------------------
+// 抓取所有的 select 下拉式選單
+let all_select = document.getElementsByTagName("select");
+// 抓取 所有的 th (ths)
+let ths = tr_header.childNodes;
+// 使用 ajax 從 get_data.php 取得資料
+// 建立新的 ajax 請求
+let request_g = new XMLHttpRequest();
+request_g.onreadystatechange = function () { // 當 readyState 改變時 (readyState 表示 XMLHttpRequest 的狀態)
+    if (this.readyState == 4 && this.status == 200) { // 成功連線時
+        // 取得從 get_data.php 得到的資料
+        let get_data = request_g.responseText;
+        // 將得到的資料轉換為 json
+        let datas = JSON.parse(get_data);
+        // 更新後的資料都在最後面
+        // 反轉 datas 陣列 (把最新的資料移到前面)
+        datas = datas.reverse();
+        // ------------------------------給 thead 裡面的 th 資料
+        // th 裡面的資料要跟 select 的 option 連動
+        // 逐一抓取每個 th 和每個 select (數量一樣)
+        for (let i = 0; i < ths.length; i++) {
+            let th = ths[i];
+            let select = all_select[i];
+            // 將 th 的標題改為 select 裡面的 option 選項文字
+            th.innerText = select.value;
+        };
+        // --------------------------給 tbody 裡面的 tr 裡面的 td 資料
+        // 取得 tbody 裡面的所有 tr (trs)
+        trs = tbody.childNodes;
+        // 取得 trs 裡面的 所有 td (tds)
+        for (let i = 0; i < trs.length; i++) { // i: 所有 tr 的列編號
+            let tds = trs[i].childNodes; // 每個 tr 裡面的 所有 td (tds)
+            for (let j = 0; j < tds.length; j++) { // j: td 的 index
+                // 逐一取得所有 tds 裡面的 td
+                // 依據位置 (i and j) 給予資料: tds[td].innerText = datas[tr的編號][td的編號]
+                tds[j].innerText = datas[i][j];
+            }
+        };
+        // -------------------------------偵測 select，將 select 欄位跟資料作連動
+
+        for (let i = 0; i < all_select.length; i++) { // 取得所有的 select
+            // 取得每個 select 選擇的值
+            // 將 th 標題的內文與 select 的 option 相同
+            if (i == 0) { // 如果是第一個標題 (資瞭表 1)
+                ths[i].innerText = "Time";
+            } else { // 將標題連動 option 文字
+                ths[i].innerText = all_select[i].value;
+            }
+            // 取得使用者選擇的 option
+            let select_item = Number(all_select[i].value.substring(4));
+            // 偵測當每個 select 選擇的值改變時
+            all_select[i].addEventListener("change", function () {
+                // console.log(all_select[i].value);
+                // 更新使用者選擇的 option
+                select_item = Number(all_select[i].value.substring(4));
+                // 將 th 標題內文與 select 的 option 連動
+                if (i == 0) { // 第一個資料表 1 固定是 Time
                     ths[i].innerText = "Time";
-                } else { // 將標題連動 option 文字
+                } else {
+                    // 跟著 select 的 option 連動 (將標題的文字等於 option 的文字值)
                     ths[i].innerText = all_select[i].value;
                 }
-                // 取得使用者選擇的 option 
-                let select_item = Number(all_select[i].value.substring(4));
-                // 選擇 option 後將該欄的資料更新 (當自動刷新時，因為欄位值已更動，就能在更新後連動)
+                // 選擇 option 後將該欄的資料更新
                 // 取得該欄位編號
                 // let number = all_select[i].className;
                 // 取得所有的 tr
@@ -262,84 +328,21 @@ let refresh_data = function () {
                     // tds.innerText = data[0-40][item?]
                     tds.innerText = datas[j][select_item];
                 };
-                // 偵測當每個 select 選擇的值改變時
-                all_select[i].addEventListener("change", function () {
-                    // console.log(all_select[i].value);
-                    // 更新使用者選擇的 option
-                    select_item = Number(all_select[i].value.substring(4));
-                    // 將 th 標題內文與 select 的 option 連動
-                    if (i == 0) { // 第一個資料表 1 固定是 Time
-                        ths[i].innerText = "Time";
-                    } else {
-                        // 跟著 select 的 option 連動 (將標題的文字等於 option 的文字值)
-                        ths[i].innerText = all_select[i].value;
-                    }
-                    // 選擇 option 後將該欄的資料更新
-                    // 取得該欄位編號
-                    // let number = all_select[i].className;
-                    // 取得所有的 tr
-                    for (let j = 0; j < trs.length; j++) {
-                        // 取得該 tr
-                        let tr = trs[j];
-                        // 取得該 tr 裡面的 td (一整欄)
-                        let tds = tr.childNodes[i];
-                        // 將 td 裡面的資料更新
-                        // tds.innerText = data[0-40][item?]
-                        tds.innerText = datas[j][select_item];
-                    };
 
-                });
-            };
-
+            });
         };
 
     };
-    // 指定請求的方法、路徑
-    request_g.open("GET", "get_data.php", true);
-    // 發送請求
-    request_g.send();
+
 };
-// -----------------------------------------------------tbody------------------------------------------------
-// 創建多行 tr_data 資料列
-// 總共想創建的 tr_data 資料行數 (預設 40 行)
-let tr_data;
-let total_records = 60;
-for (let i = 0; i < total_records; i++) {
-    // 創建 tr_data 資料列
-    tr_data = document.createElement("tr");
-    // 創建 td 資料格新增到 tr_data 資料列
-    for (let j = 0; j < 6; j++) {
-        // 創建 td 資料格
-        let td = document.createElement("td");
-        td.innerText = j;
-        // 將 td 資料格新增到 tr_data 資料列
-        tr_data.appendChild(td);
-    };
-    // 將 tr_data 新增到 tbody
-    tbody.appendChild(tr_data);
-};
-// 初始資料
-refresh_data();
+// 指定請求的方法、路徑
+request_g.open("GET", "get_data.php", true);
+// 發送請求
+request_g.send();
+// --------------------------------------------全域變數-----------------------------------------
 
-// ---------------------------------------------add to body----------------------------------------
-// 將 container 加入 body
-document.body.appendChild(container);
-// 將 select_store 加入 body
-document.body.appendChild(select_store);
-// 將 container_table 加入 body
-document.body.appendChild(container_table);
-
-// -------------------------------------------scrollbar (初始)-------------------------------------
-// 動態設定 scrollbar 的高
-// 設定可視行 (總行數/2) 行
-// 取得 table 的高
-let table_tall = document.getElementsByTagName('table')[0].offsetHeight;
-// 設定包裹住 table 的 div 的高 (scroll bar) 為 table 的高的一半再加上一半高度的 td
-container_table.style.height = ((table_tall / 2) + 11) + "px";
-
-// -----------------------------------------------初始化資料-----------------------------------------
-// 要傳送的資料
-let data = {
+// 要傳送給 create_data.php 的上下限值
+let to_create = {
     "upper_limit": input_upper_limit.value, // 資料的亂數上限值
     "lower_limit": input_lower_limit.value // 資料的亂數下限值
 };
@@ -350,14 +353,13 @@ let set_timer;
 // 初始化 tbody 裡面所有的 tr
 let trs = tbody.childNodes;
 // 呼叫 create_data.php 的函式
-let res = function (data) {
-    // 使用 ajax 從 php 取得資料
+let call = setInterval(function () {
+    // 使用 ajax 向 create_data.php 傳送資料
     // 將 data 轉換成 json 字串
-    let json_data = JSON.stringify(data);
+    let json_data = JSON.stringify(to_create);
     // 建立新的 ajax 請求
     let request_c = new XMLHttpRequest();
     request_c.onreadystatechange = function () { // 當 readyState 改變時
-        // console.log("res: " + json_data);
     };
     // 指定路徑與傳送方式
     request_c.open("POST", "create_data.php", true);
@@ -365,236 +367,158 @@ let res = function (data) {
     request_c.setRequestHeader("Content-Type", "application/json");
     // 發送請求
     request_c.send(json_data);
-};
+}, 1000);
 
-// 抓取所有的 select 下拉式選單
-let all_select = document.getElementsByTagName("select");
-// 抓取所有的 th 標籤
-let ths = document.getElementsByTagName('th');
-
-// 初始化計數器 (測試)
-let count = 0;
-
-// --------------------------------------------- 點擊按鈕後-------------------------------------
-// 輸入條件後，按下開始按鈕取得全部輸入
-// 新增開始按鈕的點擊事件
+// ---------------------------------------- 點擊開始按鈕後-------------------------------------
 start.addEventListener("click", function () {
-    console.log("按下按鈕");
-    start.disabled = true;
-    sto.disabled = false;
-    // 抓取所有的 select 下拉式選單
-    // let all_select = document.getElementsByTagName("select");
-    // 第一個不要，其他都要
-    // for (let i = 1; i < all_select.length; i++) {
-    //     // 取得每個 select 選擇的值
-    //     all_select[i].value;
-    // };
+    if (input_upper_limit.value <= input_lower_limit.value) {
+        alert("下限值不能大於等於上限值");
+        input_upper_limit.value = 100;
+        input_lower_limit.value = 0;
 
-    // 動態設定 scrollbar 的高 (根據 table 的高做動態更動)
-    // 設定可視行 (總行數/2) 行
-    // 取得 table 的高
-    let table_tall = document.getElementsByTagName('table')[0].offsetHeight;
-    // 設定包裹住 table 的 div 的高 (scroll bar) 為 table 的高的一半再加上一半高度的 td
-    container_table.style.height = ((table_tall / 2) + 11) + "px";
-
-    // -------------------------------------更新點擊按鈕後的刷新時間-----------------------------------------------
-    refresh_time = Number(input_refresh.value) * 1000;
-    // // 清除舊的計時器
-    // clearInterval(set_timer);
-    // 啟動新的計時器
-    set_timer = setInterval(function () { // 每隔兩秒
-        res(data); // 建立 ajax 連線請求，呼叫 php 檔案
-        // console.log("點擊按鈕後的時間: " + refresh_time);
-        // ---------------------------------------- 顯示幾筆資料-------------------------------------
-        // 連動顯示幾筆資料
-        // 抓取顯示幾筆資料
-        // 總共想創建的 tr_data 資料行數等於使用者輸入的資料
-        total_records = input_display.value;
-        // 取得包裹資料表格的 tbody 與上級的 table
-        let tbody = document.getElementsByTagName("tbody")[0];
-        // 清除初始資料表格 (清除內容)
-        table.removeChild(tbody);
-        // 產生新資料
-        // 創建 new_tbody
-        let new_tbody = document.createElement("tbody");
-        // 將 new_tobdy 加入 table
-        table.appendChild(new_tbody);
-        for (let i = 0; i < total_records; i++) {
-            // 創建 tr_data 資料列
-            let tr_data = document.createElement("tr");
-            // 創建 td 資料格新增到 tr_data 資料列
-            for (let j = 0; j < 6; j++) {
-                // 創建 td 資料格
-                let td = document.createElement("td");
-                // // 賦予 td 資料格資料
-                // td.innerText = j;
-                // 將 td 資料格新增到 tr_data 資料列
-                tr_data.appendChild(td);
-            };
-            // 將 tr_data 新增到 new_tbody
-            new_tbody.appendChild(tr_data);
+    } else {
+        // 按鈕設置
+        start.disabled = true;
+        sto.disabled = false;
+        sto.style.display = "block";
+        // 更新刷新的時間
+        refresh_time = Number(input_refresh.value) * 1000;
+        // 更新顯示資料的表格數 (資料筆數)
+        // let old_total_records = Number(total_records);
+        total_records = Number(input_display.value);
+        to_create = { // 更新上下限值
+            "upper_limit": input_upper_limit.value,
+            "lower_limit": input_lower_limit.value
         };
-        // -----------------------------------------------更新資料------------------------------------------------
-        // 使用 ajax 從 php 取得資料
-        // 根據初始設定值，向 get_data.php 取資料，並顯示在表格內 (資料依照 select 的 option 變動)
-        // 建立新的 ajax 請求
-        let request_g = new XMLHttpRequest();
-        request_g.onreadystatechange = function () { // 當 readyState 改變時 (readyState 表示 XMLHttpRequest 的狀態)
-            if (this.readyState == 4 && this.status == 200) {
-                // 取得從 get_data.php 得到的資料
-                let get_data = request_g.responseText;
-                // 將得到的資料轉換為 json
-                let datas = JSON.parse(get_data); // 所有資料庫的資料
-                // 反轉 datas 陣列 (把最新的資料移到前面)
-                datas = datas.reverse();
-                // console.log(datas);
-                // console.log("顯示幾筆資料: " + input_display.value);
-                // console.log("上限值: " + input_upper_limit.value);
-                // console.log("下限值: " + input_lower_limit.value);
-                // console.log("自動刷新時間: " + input_refresh.value);
 
-                // 顯示初始資料筆數
-                // 取得 tbody 裡面的所有 tr
-                trs = new_tbody.childNodes;
-                // 取得 所有 tr 裡面的 td
-                for (let i = 0; i < trs.length; i++) {
-                    let tds = trs[i].childNodes; // 所有的 td
-                    for (let j = 0; j < tds.length; j++) {
-                        // 將取得的資料值給相對的 td
-                        tds[j].innerText = datas[i][j];
-                    }
-                };
-                for (let i = 0; i < all_select.length; i++) { // 取得所有的 select
-                    // 取得每個 select 選擇的值
-                    // console.log("當前選擇的值: " + all_select[i].value);
-                    // 將 th 標題的內文與 select 的 option 相同
-                    if (i == 0) {
-                        ths[i].innerText = "Time";
-                    } else {
-                        ths[i].innerText = all_select[i].value;
-                    }
-                    // 使用者選擇的 option
-                    let select_item = Number(all_select[i].value.substring(4));
-                    // 選擇 option 後將該欄的資料更新 (當自動刷新時，因為欄位值已更動，就能在更新後連動)
-                    // 取得該欄位編號
-                    // let number = all_select[i].className;
-                    // 取得所有的 tr
-                    for (let j = 0; j < trs.length; j++) {
-                        // 取得該 tr
-                        let tr = trs[j];
-                        // 取得該 tr 裡面的 td (一整欄)
-                        let tds = tr.childNodes[i];
-                        // 將 td 裡面的資料更新
-                        // tds.innerText = data[0-40][item?]
-                        tds.innerText = datas[j][select_item];
+        // 開啟計時器
+        set_timer = setInterval(function () {
+            let request_g = new XMLHttpRequest();
+            request_g.onreadystatechange = function () { // 當 readyState 改變時 (readyState 表示 XMLHttpRequest 的狀態)
+                if (this.readyState == 4 && this.status == 200) {
+                    // 取得從 get_data.php 得到的資料
+                    let get_data = request_g.responseText;
+                    // 將得到的資料轉換為 json
+                    let datas = JSON.parse(get_data);
+                    // 反轉 datas 陣列 (把最新的資料移到前面)
+                    datas = datas.reverse();
+                    // 如果顯示資料筆數有更新的話  // 同時刪除同時新增在同時新增資料不會閃爍、不需要判斷
+                    // if (old_total_records != total_records) {
+                    // console.log("判斷");
+                    // 刪除舊的 tbody，再創新的
+                    // 根據新的表格數，刪除舊的 tbody 再創新的 new_tbody
+                    // 取得包裹資料表格的 tbody 與上級的 table
+                    let tbody = document.getElementsByTagName("tbody")[0];
+                    // 清除初始資料表格 (清除內容)
+                    table.removeChild(tbody);
+                    // 創新的 new_tbody
+                    let new_tbody = document.createElement("tbody");
+                    // 將 new_tobdy 加入 table
+                    table.appendChild(new_tbody);
+
+                    // 創建新的 tbody 內容
+                    for (let i = 0; i < total_records; i++) {
+                        // 創建 tr_data 資料列
+                        let tr_data = document.createElement("tr");
+                        // 創建 td 資料格新增到 tr_data 資料列
+                        for (let j = 0; j < 6; j++) {
+                            // 創建 td 資料格
+                            let td = document.createElement("td");
+                            // 賦予 td 資料格資料
+                            // td.innerText = j;
+                            // 將 td 資料格新增到 tr_data 資料列
+                            tr_data.appendChild(td);
+                        };
+                        // 將 tr_data 新增到 new_tbody
+                        new_tbody.appendChild(tr_data);
                     };
-                    // 偵測當每個 select 選擇的值改變時
-                    all_select[i].addEventListener("change", function () {
-                        // console.log(all_select[i].value);
-                        // 更新使用者選擇的 option
-                        select_item = Number(all_select[i].value.substring(4));
-                        // 將 th 標題內文與 select 的 option 連動
-                        if (i == 0) { // 第一個資料表 1 固定是 Time
+                    // 給 tbody 裡面的 tr 裡面的 td 資料
+                    // 取得 new_tbody 裡面的所有 tr (trs)
+                    trs = new_tbody.childNodes;
+
+                    // } else {
+                    //     trs = tbody.childNodes;
+                    // };
+
+                    // 清空 tbody 裡面的內容
+                    for (let i = 0; i < trs.length; i++) { // i: 所有 tr 的列編號
+                        let tds = trs[i].childNodes; // 每個 tr 裡面的 所有 td (tds)
+                        for (let j = 0; j < tds.length; j++) { // j: td 的 index
+                            // 逐一取得所有 tds 裡面的 td
+                            // 依據位置 (i and j) 給予資料: tds[td].innerText = datas[tr的編號][td的編號]
+                            tds[j].innerText = "";
+                        }
+                    };
+                    // 取得 trs 裡面的 所有 td (tds)
+                    for (let i = 0; i < trs.length; i++) { // i: 所有 tr 的列編號
+                        let tds = trs[i].childNodes; // 每個 tr 裡面的 所有 td (tds)
+                        for (let j = 0; j < tds.length; j++) { // j: td 的 index
+                            // 逐一取得所有 tds 裡面的 td
+                            // 依據位置 (i and j) 給予資料: tds[td].innerText = datas[tr的編號][select 選項的編號]
+                            if (all_select[j].value.substring(4) == "") { // 判斷是否是時間欄位
+                                tds[j].innerText = datas[i][0];
+                            } else {
+                                tds[j].innerText = datas[i][all_select[j].value.substring(4)];
+                            }
+                        }
+                    };
+                    // 再重新設定 tbody 行數時，同時設定 scrollbar 高度(不會延遲)
+                    table_tall = document.getElementsByTagName('table')[0].offsetHeight;
+                    // 設定包裹住 table 的 div (container_table) 的高為 table 的高的一半再加上一半高度的 td
+                    container_table.style.height = ((table_tall / 2) + 11) + "px";
+
+                    // 偵測 select，將 select 欄位跟資料作連動
+                    for (let i = 0; i < all_select.length; i++) { // 取得所有的 select
+                        // 取得每個 select 選擇的值
+                        // 將 th 標題的內文與 select 的 option 相同
+                        if (i == 0) { // 如果是第一個標題 (資瞭表 1)
                             ths[i].innerText = "Time";
-                        } else {
-                            // 跟著 select 的 option 連動 (將標題的文字等於 option 的文字值)
+                        } else { // 將標題連動 option 文字
                             ths[i].innerText = all_select[i].value;
                         }
-                        // 選擇 option 後將該欄的資料更新
-                        // 取得該欄位編號
-                        // let number = all_select[i].className;
-                        // 取得所有的 tr
-                        for (let j = 0; j < trs.length; j++) {
-                            // 取得該 tr
-                            let tr = trs[j];
-                            // 取得該 tr 裡面的 td (一整欄)
-                            let tds = tr.childNodes[i];
-                            // 將 td 裡面的資料更新
-                            // tds.innerText = data[0-40][item?]
-                            tds.innerText = datas[j][select_item];
-                        };
+                        // 偵測當每個 select 選擇的值改變時
+                        all_select[i].addEventListener("change", function () {
+                            // console.log(all_select[i].value);
+                            // 取得使用者選擇的 option
+                            select_item = Number(all_select[i].value.substring(4));
+                            // 將 th 標題內文與 select 的 option 連動
+                            if (i == 0) { // 第一個資料表 1 固定是 Time
+                                ths[i].innerText = "Time";
+                            } else {
+                                // 跟著 select 的 option 連動 (將標題的文字等於 option 的文字值)
+                                ths[i].innerText = all_select[i].value;
+                            }
+                            // 選擇 option 後將該欄的資料更新
+                            // 取得該欄位編號
+                            // let number = all_select[i].className;
+                            // 取得所有的 tr
+                            for (let j = 0; j < trs.length; j++) {
+                                // 取得該 tr
+                                let tr = trs[j];
+                                // 取得該 tr 裡面的 td (一整欄)
+                                let tds = tr.childNodes[i];
+                                // 將 td 裡面的資料更新
+                                // tds.innerText = data[0-40][item?]
+                                tds.innerText = datas[j][select_item];
+                            };
 
-                    });
+                        });
+                    };
+
                 };
-
             };
-
-        };
-        // 指定請求的方法、路徑
-        request_g.open("GET", "get_data.php", true);
-        // 發送請求
-        request_g.send();
-    }, refresh_time);
-    // -------------------------------------透過 ajax 連線到 get_data.php 請求資料---------------------------------
-    // 使用 ajax 從 php 取得資料
-    // 建立新的 ajax 請求
-    let request_g = new XMLHttpRequest();
-    request_g.onreadystatechange = function () { // 當 readyState 改變時 (readyState 表示 XMLHttpRequest 的狀態)
-        if (this.readyState == 4 && this.status == 200) {
-            // 取得從 get_data.php 得到的資料
-            let get_data = request_g.responseText;
-            // 將得到的資料轉換為 json
-            let datas = JSON.parse(get_data);
-            console.log(datas); // 最新的資料
-        };
-    };
-    // 指定請求的方法、路徑
-    request_g.open("GET", "get_data.php", true);
-    // 發送請求
-    request_g.send();
-
-    // -------------------------------------透過 ajax 連線到 create_data.php (傳遞上下限值)--------------------------------------
-    // 使用 ajax 傳遞資料給 create_data.php
-    // // 取得要傳送的資料
-    data = { // 取得當前資料，並將其更新給不斷呼叫函式 res()
-        "upper_limit": input_upper_limit.value, // 資料的亂數上限值
-        "lower_limit": input_lower_limit.value // 資料的亂數下限值
-    };
-    // 將 data 轉換成 json 字串
-    let json_data = JSON.stringify(data);
-    // 建立新的 ajax 請求
-    let request_c = new XMLHttpRequest();
-    request_c.onreadystatechange = function () { // 當 readyState 改變時
-        // console.log("click" + json_data);
-    };
-    // 指定路徑與傳送方式
-    request_c.open("POST", "create_data.php", true);
-    // 設置表頭
-    request_c.setRequestHeader("Content-Type", "application/json");
-    // 發送請求
-    request_c.send(json_data);
+            // 指定請求的方法、路徑
+            request_g.open("GET", "get_data.php", true);
+            // 發送請求
+            request_g.send();
+        }, refresh_time);
+    }
 });
+// --------------------------------------------- 點擊暫停按鈕後-------------------------------------
 sto.addEventListener("click", function () {
+    // 按鈕設置
     start.disabled = false;
     sto.disabled = true;
-    // 清除舊的計時器
+    // 清除計時器
     clearInterval(set_timer);
 });
-
-// ---------------------------------------在載入 html 後不必等待載入元件直接執行這裡的 javascript----------------------------------
-document.addEventListener("DOMContentLoaded", function () {
-    // ------------------------------------ 當開啟網頁後，取得 get_data.php 的資料顯示在網頁上-----------------------------
-    refresh_data(); // 初始資料
-    // ------------------------------------ 當開啟網頁後，每隔兩秒呼叫 create_data.php (自動刷新時間)-----------------------------
-    // 初始化計時器
-    // set_timer = setInterval(function () {
-    //     res(data); // 建立 ajax 連線請求，呼叫 php 檔案，並把當前的上下限值給 create_data.php
-    //     // console.log("初始的計時器時間: " + refresh_time);
-    //     refresh_data(); // 不斷更新資料
-    // }, refresh_time);
-});
-
-// // 在網頁重新整理前，重新設定 data.json 初始值
-// window.addEventListener("beforeunload", function () {
-//     // 建立新的 ajax 請求
-//     let request = new XMLHttpRequest();
-//     request.onreadystatechange = function () { // 當 readyState 改變時 (readyState 表示 XMLHttpRequest 的狀態)
-//         if (this.readyState == 4 && this.status == 200) { // 當連線成功
-
-//         };
-//     };
-//     // 指定請求的方法、路徑
-//     request.open("GET", "clear.php", true);
-//     // 發送請求
-//     request.send();
-// });
