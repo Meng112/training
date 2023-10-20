@@ -1,0 +1,12 @@
+body {
+    display:block;
+}
+
+div {
+    /* 寬度設定 */
+    width: 850px;
+    /* 外距靠上 100 像素 */
+    margin-top: 10px;
+    /* 內距 50 像素 */
+    padding: 50px;
+}
