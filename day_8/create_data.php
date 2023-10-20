@@ -13,57 +13,39 @@ $connect = new mysqli($server_name, $user_name, $password, $database);
 if ($connect->connect_error) { // 若連接出問題 (connect_error)
     die("連接失敗: " . $connect->connect_error . "<br>"); // dio() 停止執行，並顯示具體錯誤訊息
 }
-echo "連接成功";
+echo "連接成功<br>";
 
-// // 創建 SQL 資料表與  Time 欄位
-// $create_table = "CREATE TABLE  IF NOT EXISTS db_test (
-//     Time TIME
-// )";
-// // 查詢 SQL 是否有剛剛創建的資料表
-// if (mysqli_query($connect, $create_table)) {
-//     echo "創建成功<br>";
-// } else { // 創建失敗，傳回錯誤訊息
-//     echo "創建失敗: " . mysqli_error($connect) . "<br>";
-// }
+// 創建 SQL 資料表與  Time 欄位
+$create_table = "CREATE TABLE  IF NOT EXISTS create_random (
+    item float
+)";
+// 查詢 SQL 是否有剛剛創建的資料表
+if (mysqli_query($connect, $create_table)) {
+    echo "創建成功<br>";
+} else { // 創建失敗，傳回錯誤訊息
+    echo "創建失敗: " . mysqli_error($connect) . "<br>";
+}
 
-// // 新增欄位名稱
-// for ($i = 1; $i < 11; $i++) { // 建立 item 1-10
-//     $column_name = "item" . $i;
-//     // 檢查是否有相同的欄位
-//     $check_column = "SHOW COLUMNS FROM db_test LIKE '$column_name'";
-//     $check_result = $connect->query($check_column);
-//     // 如果沒有的話
-//     if ($check_result->num_rows == 0) { // 找不到，可以新增
-//         // 新增欄位
-//         $insert_column = "ALTER TABLE db_test ADD COLUMN $column_name VARCHAR(255)";
+// 亂數最大最小值
+$max = 1000;
+$min = 0;
+// 產生亂數資料 (範圍 0 ~ 1000，取小數第 1 位)
+$random_number =number_format($min + mt_rand()/mt_getrandmax() * ($max - $min), 1);
 
-//         // 查詢 SQL 是否有更改欄位成功
-//         if (mysqli_query($connect, $insert_column)) {
-//             // echo "新增成功<br>";
-//         } else {
-//             echo "新增失敗: " . mysqli_error($connect) . "<br>";
-//         }
-//     } else {
-//         // echo "已經有此欄位了";
-//     }
-// }
-// // // 從 data.json 取得上下限值 (初始)
-// // // 路徑檔案名稱
-// // $path_file_name = "data.json";
-// // // 讀取檔案內容
-// // $data = file_get_contents($path_file_name);
-// // // 將 json 檔案轉回 php 格式
-// // $data = json_decode($data, true);
-// // // 取得上限值
-// // $upper_value = $data["upper"];
-// // // 取得下限值
-// // $lower_value = $data["lower"];
 
-// // 新增資料到欄位中
-// // 格式化時間
-// $current_time = date("H:i:s");
-// // SQL 插入資料值進欄位
-// $insert_query = "INSERT INTO db_test (Time, item1, item2, item3, item4, item5, item6, item7, item8, item9, item10) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+// 新增資料到欄位中
+// SQL 插入資料值進欄位
+$insert_query = "INSERT INTO create_random  VALUES ($random_number)";
+// 查詢資料是否成功
+if ($connect -> query($insert_query) === true) {
+    echo "資料新增成功<br>";
+} else {
+    echo "資料新增失敗<br>";
+}
+
+// 關閉資料庫連線
+$connect->close();
+
 // // 使用 prepared statement
 // if ($join = $connect->prepare($insert_query)) {
 //     // 連結參數、綁定參數 (資料型態 s: 字串, i: 整數)
