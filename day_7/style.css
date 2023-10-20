@@ -1,0 +1,142 @@
+html {
+    /* 背景顏色 */
+    background-color: rgb(51 102 102);
+    /* 文字顏色 */
+    color: rgb(255, 255, 255);
+}
+
+.container {
+    /* 寬度 550 像素 */
+    width: 620px;
+    /* 自動分配外距 */
+    margin: auto;
+    margin-top: 0px;
+}
+
+.top_row,
+.middle_row {
+    /* 彈性排版 */
+    display: flex;
+    /* 主軸的排列方式: 分散到整個空間*/
+    justify-content: space-between;
+    /* 內距 */
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+.bottom_row {
+    /* 彈性排版 */
+    display: flex;
+    /* 主軸的排列方式: 分散到整個空間*/
+    /* justify-content: ; */
+    /* 內距 */
+    /* padding-left: 5px;
+    padding-right: 5px; */
+}
+
+div {
+    /* 框線設定 1 像素，黑色實線 */
+    /* border: 1px solid rgb(255, 255, 255); */
+    /* 內距 5 像素 */
+    padding: 2px;
+    /* 外距 5 像素 */
+    margin: 2px;
+    /* 內元素置中對齊 */
+    align-items: center;
+}
+
+.select_store {
+    /* 寬度 600 像素 */
+    width: 585px;
+    /* 自動分配外距 */
+    margin: auto;
+    /* 彈性排版 */
+    display: flex;
+    /* 主軸的排列方式: 分散到整個空間*/
+    justify-content: flex-end;
+
+}
+
+.container_table {
+    /* 寬度 600 像素 */
+    width: 610px;
+    /* 自動分配外距 */
+    margin: auto;
+    /* 滾動條 */
+    overflow-y: scroll;
+    /* 將內容由右至左 (反轉) */
+    direction: rtl;
+
+}
+
+/* 滾動條的寬度 */
+.container_table::-webkit-scrollbar {
+    width: 15px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+/* 滾動條背景顏色 */
+.container_table::-webkit-scrollbar-track {
+    background: rgb(111 183 183);
+    border-radius: 10px;
+}
+
+/* 滾動條把手顏色 */
+.container_table::-webkit-scrollbar-thumb {
+    background: rgb(0 128 255);
+    border-radius: 10px;
+}
+
+
+table {
+    /* 寬度 600 像素 */
+    width: 580px;
+    /* 自動分配外距 */
+    margin: auto;
+    margin-right: 10px;
+    /* 將內容由左至右 (轉回來) */
+    direction: ltr;
+    /* 內文置中 */
+    text-align: center;
+    /* 平均分配欄寬 */
+    table-layout: fixed;
+}
+
+thead {
+    /* 固定表格 */
+    position: sticky;
+    top: 0;
+}
+
+th,
+td {
+    /* 框線設定 1 像素，黑色實線 */
+    border: 1px solid rgb(0, 0, 0);
+    /* 背景顏色 */
+    background-color: rgb(79 157 157);
+}
+
+button {
+    /* 文字大小 18 像素 */
+    font-size: 18px;
+    /* 按鈕寬度 100 像素 */
+    width: 100px;
+    /* 右外距 3 像素 */
+    margin-right: 3px;
+}
+.start {
+    margin-left: 240px;
+}
+
+select {
+    /* 寬度設定 90 像素 */
+    width: 90px;
+    margin-left: 10px;
+
+}
+
+input {
+    /* 內文置中 */
+    text-align: center;
+}

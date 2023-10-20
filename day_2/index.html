@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <title>Day 2</title>
+</head>
+
+<body>
+    <!-- 第一部分 -->
+    <table>
+        <!-- 表格標題 -->
+        <caption>Demo&nbsp;1</caption>
+        <thead>
+            <!-- 欄標題 -->
+            <tr class="tbottom_line">
+                <th>姓名</th>
+                <th>性別</th>
+                <th>暫住地</th>
+            </tr>
+        </thead>
+        <!-- 資料 -->
+        <tbody>
+            <tr class="t_color">
+                <td>張山</td>
+                <td>男</td>
+                <td>浙江寧波</td>
+            </tr>
+            <tr>
+                <td>李四</td>
+                <td>女</td>
+                <td>浙江杭州</td>
+            </tr>
+            <tr class="t_color">
+                <td>王五</td>
+                <td>男</td>
+                <td>湖南長沙</td>
+            </tr>
+            <tr>
+                <td>找六</td>
+                <td>男</td>
+                <td>浙江溫州</td>
+            </tr>
+            <tr class="t_color">
+                <td>Rain</td>
+                <td>男</td>
+                <td>浙江杭州</td>
+            </tr>
+            <tr>
+                <td>MAXMAN</td>
+                <td>女</td>
+                <td>浙江杭州</td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- 第二部分 -->
+    <table>
+        <!-- 表格標題 -->
+        <caption>Demo&nbsp;2</caption>
+        <!-- 欄標題 -->
+        <thead>
+            <tr class="tbottom_line">
+                <th>&nbsp;</th>
+                <th>姓名</th>
+                <th>性別</th>
+                <th>暫住地</th>
+            </tr>
+        </thead>
+        <!-- 資料 -->
+        <tbody>
+            <tr class="t_color">
+                <td><input type="checkbox" name="張山" value="ZS" id="zs" onchange="click_ch(this.id)"></td>
+                <td>張山</td>
+                <td>男</td>
+                <td>浙江寧波</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" name="李四" value="LS" id="ls" onchange="click_ch(this.id)"></td>
+                <td>李四</td>
+                <td>女</td>
+                <td>浙江杭州</td>
+            </tr>
+            <tr class="t_color">
+                <td><input type="checkbox" name="王五" value="WO" id="wo" onchange="click_ch(this.id)"></td>
+                <td>王五</td>
+                <td>男</td>
+                <td>湖南長沙</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" name="找六" value="ZL" id="zl" onchange="click_ch(this.id)"></td>
+                <td>找六</td>
+                <td>男</td>
+                <td>浙江溫州</td>
+            </tr>
+            <tr class="t_color">
+                <td><input type="checkbox" name="Rain" value="Rain" id="rain" onchange="click_ch(this.id)"></td>
+                <td>Rain</td>
+                <td>男</td>
+                <td>浙江杭州</td>
+            </tr>
+            <tr>
+                <td><input type="checkbox" name="MAXMAN" value="MAXMAN" id="max" onchange="click_ch(this.id)"></td>
+                <td>MAXMAN</td>
+                <td>女</td>
+                <td>浙江杭州</td>
+            </tr>
+        </tbody>
+    </table>
+    <!-- 第三部分 -->
+    <table id="table_thr">
+        <!-- 表格標題 -->
+        <caption>Demo&nbsp;3</caption>
+        <!-- 欄標題 -->
+        <thead>
+            <tr class="tbottom_line">
+                <th>&nbsp;</th>
+                <th>姓名</th>
+                <th>性別</th>
+                <th>暫住地</th>
+            </tr>
+        </thead>
+        <!-- 資料 -->
+        <tbody>
+            <tr class="t_color">
+                <td><input type="radio" name="one" value="ZS" id="zs_" onchange="click_ra(this.id)"></td>
+                <td>張山</td>
+                <td>男</td>
+                <td>浙江寧波</td>
+            </tr>
+            <tr>
+                <td><input type="radio" name="one" value="LS" id="ls_" onchange="click_ra(this.id)"></td>
+                <td>李四</td>
+                <td>女</td>
+                <td>浙江杭州</td>
+            </tr>
+            <tr class="t_color">
+                <td><input type="radio" name="one" value="WO" id="wo_" onchange="click_ra(this.id)"></td>
+                <td>王五</td>
+                <td>男</td>
+                <td>湖南長沙</td>
+            </tr>
+            <tr>
+                <td><input type="radio" name="one" value="ZL" id="zl_" onchange="click_ra(this.id)"></td>
+                <td>找六</td>
+                <td>男</td>
+                <td>浙江溫州</td>
+            </tr>
+            <tr class="t_color">
+                <td><input type="radio" name="one" value="Rain" id="rain_" onchange="click_ra(this.id)"></td>
+                <td>Rain</td>
+                <td>男</td>
+                <td>浙江杭州</td>
+            </tr>
+            <tr>
+                <td><input type="radio" name="one" value="MAXMAN" id="maxman_" onchange="click_ra(this.id)"></td>
+                <td>MAXMAN</td>
+                <td>女</td>
+                <td>浙江杭州</td>
+            </tr>
+        </tbody>
+    </table>
+    <script src="main.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,66 @@
+html {
+    /* 網頁背景色為灰色 */
+    background-color: rgb(89 89 89);
+}
+
+body {
+    /* 彈性排版 */
+    display: flex;
+    /* 以 column 直向排列 */
+    flex-direction: column;
+    /* 置中對齊 */
+    align-items: center;
+}
+
+table {
+    /* 置中對齊: 左右外距自動 */
+    /* 左外距設為自動 */
+    margin-left: auto;
+    /* 右外距設為自動 */
+    margin-right: auto;
+    /* 表格寬度設定 500 像素 */
+    width: 500px;
+    height: 100%;
+    /* 平均分配欄寬 */
+    table-layout: fixed;
+}
+
+thead {
+    /* 固定表格 */
+    position: sticky;
+    top: 0;
+}
+
+.container {
+    /* 滾動條 */
+    overflow-y: scroll;
+}
+
+.container::-webkit-scrollbar {
+    /* 隱藏滾動條，不影響使用 */
+    display: none;
+}
+
+th {
+    /* 框線 1 像素，白色實線 */
+    border: 1px solid white;
+    /* 背景顏色設定藍色 */
+    background-color: rgb(56 73 120);
+    /* 文字顏色設定白色 */
+    color: white;
+}
+
+td {
+    /* 框線 1 像素，白色實線 */
+    border: 1px solid white;
+    /* 背景顏色為淺灰色 */
+    background-color: rgb(155 152 152);
+
+}
+
+select {
+    /* 寬度 */
+    width: 70px;
+    /* 上距 5 px */
+    margin-top: 5px;
+}

@@ -1,0 +1,45 @@
+html {
+    /* 整個網頁字體設為微軟正黑體 */
+    font-family: Microsoft JhengHei;
+}
+
+table,
+tr,
+td {
+    /* 將多個表格框線合成 1 條 */
+    border-collapse: collapse;
+    /* 寬度 100% */
+    width: 420px;
+    
+    /* 平均分配欄寬 */
+    table-layout: fixed;
+}
+
+td {
+    /* 內距 */
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.tbottom_line {
+    /* 下框線寬 1 像素、實線、黑色 */
+    border-bottom: 3px solid black;
+    /* 文字靠左、垂直置中 */
+    text-align: left;
+    vertical-align: middle;
+
+}
+
+.t_color {
+    /* 文字顏色 */
+    background-color: rgb(255 243 191);
+}
+
+caption {
+    /* 文字粗體 */
+    font-weight: bolder;
+    /* 放大 1.5 倍 */
+    font-size: 1.5em;
+    /* 文字靠左 */
+    text-align: left;
+}
