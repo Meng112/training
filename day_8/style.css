@@ -1,0 +1,15 @@
+body {
+    /* 設定 body 彈性排版 */
+    display: flex;
+    /* 內元素水平置中 */
+    justify-content: center;
+}
+
+div {
+    /* 寬度設定 */
+    width: 800px;
+    /* 外距靠上 100 像素 */
+    margin-top: 10px;
+    /* 內距 50 像素 */
+    padding: 50px;
+}

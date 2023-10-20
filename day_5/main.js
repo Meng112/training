@@ -130,9 +130,9 @@ const config = {
                     color: "white", // 顏色
                 },
                 ticks: { // y 軸標籤設置
-                    stepSize: 1, // 間距設定為 1
+                    stepSize: 10, // 間距設定為 10
                     callback: function (value) { // 自訂標籤設置
-                        return value + ".00%";
+                        return value + "%";
                     },
                 },
             },
