@@ -98,14 +98,14 @@ $connect->close();
 //     $connect->close();
 // }
 
-// // // 刪除資料表
-// // $drop_table = "DROP TABLE IF EXISTS db_test";
-// // if ($connect->query($drop_table) === TRUE) {
-// //     echo "删除成功<br>";
-// // } else {
-// //     echo "錯誤: " . $connect->error . "<br>";
-// // }
+// // 刪除資料表
+// $drop_table = "DROP TABLE IF EXISTS create_random";
+// if ($connect->query($drop_table) === TRUE) {
+//     echo "删除成功<br>";
+// } else {
+//     echo "錯誤: " . $connect->error . "<br>";
+// }
 
-// // // 關閉資料庫連線
-// // $connect->close();
+// // 關閉資料庫連線
+// $connect->close();
 ?>
