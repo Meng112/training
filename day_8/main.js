@@ -51,7 +51,7 @@ let timer;
 let datas;
 // top 3 最大值
 let maxs = [];
-let maxs_number = [];
+let maxs_index = [];
 // 測試用
 let count = 0;
 let button_container = document.createElement("div");
@@ -141,39 +141,22 @@ let labels_and_counts = function (datas) {
 
 // 計算 TOP 3 的各個百分比及範圍
 let top3 = function () {
-    // 拷貝 bar 圖的資料
-    let copy_datas = datas["datas_count"].slice(0);
-    for (let j = 0; j < 3; j++) {
-        // 取得 datas 的前 3 大資料
+    let original_datas = datas["datas_count"]; // 原始的資料
+    let copy_datas = original_datas.slice(0); // 拷貝 bar 圖的資料
+    for (let j = 0; j < 3; j++) { // 找出 top 3 (3次)
+        // 找出該陣列的最大值
         let max = Math.max(...copy_datas);
-        for (let i = 0; i < copy_datas.length; i++) {
-            // 逐一檢查資料
-            if (max == Number(copy_datas[i])) { // 找到最大值時
-                // 儲存最大值的
-                maxs.push(copy_datas[i]);
-                // 從拷貝來的資料刪除最大值
-                copy_datas.splice(i, 1);
-                // 找到的話後面就不用找了
-                break;
+        for (let i = 0; i < copy_datas.length; i++) { // 再此陣列逐一找到該最大值
+            if (copy_datas[i] == max) { // 如果再陣列中找到該最大值
+                maxs.push(max); // 把這個最大值存入 maxs
+                maxs_index.push(i); // 接著把最大值的位置 (index) 存入 maxs_index
+                copy_datas[i] = 0; // 然後讓該最大值變成 0 (這樣就不用刪掉，index 也不會跑掉)
             }
         }
     }
-    // 逐一取出最大值
-    for (let i = 0; i < maxs.length; i++) {
-        // 再原始資料裡面尋找最大值的位置
-        for (let j = 0; j < datas["datas_count"].length; j++) {
-            if (maxs[i] == datas["datas_count"][j]) { // 如果找到了
-                // 加入最大值編號
-                maxs_number.push(j);
-                // 找到就不用再找了
-            }
-        }
-    }
-    // console.log(maxs_number, datas["datas_count"]);
-    for (let i = 0; i < datas["datas_count"].length; i++) {
-        console.log(datas["datas_count"]);
-    }
-    
+    console.log(maxs, maxs_index);
+    console.log(copy_datas);
+
 };
 
 // 不斷更新
