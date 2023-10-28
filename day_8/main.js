@@ -11,29 +11,29 @@ document.body.appendChild(bar_div);
 let text_div = document.createElement("div");
 // 第一列
 let p_1 = document.createElement("p");
-let top1_persent = "top1";
-let top1_range = "";
-let top1_top2_persent = "";
-p_1.innerHTML = "第一名 佔整體 " + top1_persent + " 範圍為 " + top1_range + "與第二名相差" + top1_top2_persent;
+let top1_persent = "top1"; // 第一大的值
+let top1_range = ""; // 第一大的欄位
+let top1_top2_persent = ""; // 第一大跟第二大相減的百分比
+p_1.innerHTML = "第一名 佔整體 " + top1_persent + "% 範圍為 " + top1_range + " 與第二名相差 " + top1_top2_persent + "%";
 // 第二列
 let p_2 = document.createElement("p");
-let top2_persent = "";
-let top2_range = "";
-let top2_top3_persent = "";
-p_2.innerHTML = "第二名 佔整體" + top2_persent + "範圍為" + top2_range + "與第三名相差" + top2_top3_persent;
+let top2_persent = ""; // 第二大的值
+let top2_range = ""; // 第二大的欄位
+let top2_top3_persent = ""; // 第二大跟第三大相減的百分比
+p_2.innerHTML = "第二名 佔整體 " + top2_persent + "% 範圍為 " + top2_range + " 與第三名相差 " + top2_top3_persent + "%";
 // 第三列
 let p_3 = document.createElement("p");
-let top3_persent = "";
-let top3_range = "";
-p_3.innerHTML = "第三名 佔整體" + top3_persent + "範圍為" + top3_range;
+let top3_persent = ""; // 第三大的值
+let top3_range = ""; // 第三大的欄位
+p_3.innerHTML = "第三名 佔整體 " + top3_persent + "% 範圍為" + top3_range + "%";
 // 第四列
 let p_4 = document.createElement("p");
-let top1_top2_5_persent = "";
-p_4.innerHTML = "若第一名與第二名相差5%為眾數   第一名 " + top1_top2_5_persent;
+let top1_top2_5_persent = ""; // 判斷第一大減第二大有沒有相差 5 %
+p_4.innerHTML = "若第一名與第二名相差 5 % 為眾數 第一名 " + top1_top2_5_persent;
 // 第五列
 let p_5 = document.createElement("p");
-let top1_top3_5_persent = "";
-p_5.innerHTML = "若第一名與第三名相差5%為眾數   第一名 " + top1_top3_5_persent;
+let top1_top3_5_persent = ""; // 判斷第一大減第二大有沒有相差 5 %
+p_5.innerHTML = "若第一名與第三名相差 5 % 為眾數 第一名 " + top1_top3_5_persent;
 
 // 將所有列加入到 text_div
 text_div.appendChild(p_1);
@@ -156,8 +156,30 @@ let top3 = function () {
             }
         }
     }
+
+// 第一列
+top1_persent = "top1"; // 第一大的值
+top1_range = ""; // 第一大的欄位
+top1_top2_persent = ""; // 第一大跟第二大相減的百分比
+p_1.innerHTML = "第一名 佔整體 " + top1_persent + "% 範圍為 " + top1_range + " 與第二名相差 " + top1_top2_persent + "%";
+// 第二列
+top2_persent = ""; // 第二大的值
+top2_range = ""; // 第二大的欄位
+top2_top3_persent = ""; // 第二大跟第三大相減的百分比
+p_2.innerHTML = "第二名 佔整體 " + top2_persent + "% 範圍為 " + top2_range + " 與第三名相差 " + top2_top3_persent + "%";
+// 第三列
+top3_persent = ""; // 第三大的值
+top3_range = ""; // 第三大的欄位
+p_3.innerHTML = "第三名 佔整體 " + top3_persent + "% 範圍為" + top3_range + "%";
+// 第四列
+top1_top2_5_persent = ""; // 判斷第一大減第二大有沒有相差 5 %
+p_4.innerHTML = "若第一名與第二名相差 5 % 為眾數 第一名 " + top1_top2_5_persent;
+// 第五列
+top1_top3_5_persent = ""; // 判斷第一大減第二大有沒有相差 5 %
+p_5.innerHTML = "若第一名與第三名相差 5 % 為眾數 第一名 " + top1_top3_5_persent;
     // console.log("top 3 最大值: " + maxs); 
     // console.log("top 3 最大值的索引: " + maxs_index);
+
 
 };
 
