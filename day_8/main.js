@@ -1,14 +1,60 @@
 // 創建包裹 canvas 的 div
-let div = document.createElement('div');
+let bar_div = document.createElement('div');
 // 創建 canvas
 let ctx = document.createElement('canvas');
 // 將 canvas 加入 div
-div.appendChild(ctx);
-// 將 div 加入到 body
-document.body.appendChild(div);
+bar_div.appendChild(ctx);
+// 將 bar_div 加入到 body
+document.body.appendChild(bar_div);
+
+// 創建 text 的 div
+let text_div = document.createElement("div");
+// 第一列
+let p_1 = document.createElement("p");
+let top1_persent = "top1";
+let top1_range = "";
+let top1_top2_persent = "";
+p_1.innerHTML = "第一名 佔整體 " + top1_persent + " 範圍為 " + top1_range + "與第二名相差" + top1_top2_persent;
+// 第二列
+let p_2 = document.createElement("p");
+let top2_persent = "";
+let top2_range = "";
+let top2_top3_persent = "";
+p_2.innerHTML = "第二名 佔整體" + top2_persent + "範圍為" + top2_range + "與第三名相差" + top2_top3_persent;
+// 第三列
+let p_3 = document.createElement("p");
+let top3_persent = "";
+let top3_range = "";
+p_3.innerHTML = "第三名 佔整體" + top3_persent + "範圍為" + top3_range;
+// 第四列
+let p_4 = document.createElement("p");
+let top1_top2_5_persent = "";
+p_4.innerHTML = "若第一名與第二名相差5%為眾數   第一名 " + top1_top2_5_persent;
+// 第五列
+let p_5 = document.createElement("p");
+let top1_top3_5_persent = "";
+p_5.innerHTML = "若第一名與第三名相差5%為眾數   第一名 " + top1_top3_5_persent;
+
+// 將所有列加入到 text_div
+text_div.appendChild(p_1);
+text_div.appendChild(p_2);
+text_div.appendChild(p_3);
+text_div.appendChild(p_4);
+text_div.appendChild(p_5);
+
+// 將 text_div 加入到 body
+document.body.appendChild(text_div);
+
 // 計時器
 let timer;
+// 資料
+let datas;
+// top 3 最大值
+let maxs = [];
+// top3 最大值的索引編號儲存空間
+let maxs_index = [];
 // 測試用
+let count = 0;
 let button_container = document.createElement("div");
 // 新增開始按鈕
 let start = document.createElement("button");
@@ -45,12 +91,13 @@ let call_get_data = function () {
         if (request_g.readyState == 4 && request_g.status == 200) {
             let json_data = request_g.responseText; // 取得資料
             // 將 json 字串解析為 javascript 格式
-            let data = JSON.parse(json_data);
-            // console.log(data);
+            datas = JSON.parse(json_data);
+            // 計算 x 軸標題與各資料區間的數量
+            datas = labels_and_counts(datas);
         }
     }
-    // 指定連線路徑與傳送方式
-    request_g.open("GET", "get_data.php", true);
+    // 指定連線路徑與傳送方式，關閉同步 (程式會等完連線取得完回應才會進行下一步)
+    request_g.open("GET", "get_data.php", false);
     // 發送請求
     request_g.send();
 };
@@ -93,16 +140,57 @@ let labels_and_counts = function (datas) {
     return { "x_label": x_label, "datas_count": datas_count, };
 };
 
+// 計算 TOP 3 的各個百分比及範圍
+let top3 = function () {
+    let original_datas = datas["datas_count"]; // 原始的資料
+    let copy_datas = original_datas.slice(0); // 拷貝 bar 圖的資料
+    for (let j = 0; j < 3; j++) { // 找出 top 3 (3次)
+        // 找出該陣列的最大值
+        let max = Math.max(...copy_datas);
+        for (let i = 0; i < copy_datas.length; i++) { // 在此陣列找最大值 (從左邊開始)
+            if (copy_datas[i] == max) { // 如果在陣列中找到最大值
+                maxs.push(max); // 把這個最大值存入 maxs
+                maxs_index.push(i); // 接著把最大值的位置 (index) 存入 maxs_index
+                copy_datas[i] = 0; // 然後讓該最大值變成 0 (這樣就不用刪掉，index 也不會跑掉)
+                break; // 不用再找下去，跳出迴圈
+            }
+        }
+    }
+    // console.log("top 3 最大值: " + maxs); 
+    // console.log("top 3 最大值的索引: " + maxs_index);
+
+};
+
+// 不斷更新
+let constantly_updated = function () {
+    call_create_data();
+    call_get_data();
+    // 更新 myCh 的資料
+    myCh.config._config.data.datasets[0].data = datas.datas_count;
+    // 更新 myCh 的 x 軸標籤
+    myCh.config._config.data.labels = datas.x_label;
+    // 更新 myCh
+    myCh.update();
+};
+
+call_create_data();
+call_get_data();
+top3();
+top1_persent = maxs[0];
+top1_range = maxs_index[0];
+p_1.innerHTML = "第一名 佔整體 " + top1_persent + "% 範圍為 " + top1_range + "% 與第二名相差 " + top1_top2_persent + "%";;
+// top1_range = ;
 // 圖表配置
 let config = {
     type: 'bar', // 圖表類型
     data: { // 資料
-        labels: x_label, // x 軸標籤資料
+        labels: datas["x_label"], // x 軸標籤資料
         datasets: [{ // 資料集設置
             label: '眾數', // 圖表標題
-            data: datas_count, // 資料
+            data: datas["datas_count"], // 資料
             backgroundColor: 'rgb(254 99 131)', // 資料顏色
             borderWidth: 1, // 資料外框線
+            fontSize: "14px"
         }]
     },
     options: {
@@ -113,12 +201,17 @@ let config = {
                         return context.formattedValue + "%";
                     },
                 }
-            }
+            },
         },
         scales: { // 軸配置
             x: { // x 軸
                 grid: { // 網格線
                     display: true, // 顯示
+                },
+                ticks: {
+                    font: { // 文字設置
+                        size: 16 // 文字大小
+                    }
                 }
             },
             y: { // y 軸
@@ -151,10 +244,20 @@ let myCh = new Chart(ctx, config);
 //     timer = setInterval(constantly_updated, 1000);
 // });
 
-// // 點集暫停按鈕
-// sto.addEventListener("click", function () {
-//     sto.disabled = true;
-//     start.disabled = false;
-//     // 清除計時器
-//     clearInterval(timer);
-// });
+
+// 點集開始按鈕
+start.addEventListener("click", function () {
+    sto.style.display = "block";
+    start.disabled = true;
+    sto.disabled = false;
+    // 每秒呼叫 create_data，並自動更新圖表資料 (每秒增加亂數資料)
+    timer = setInterval(constantly_updated, 1000);
+});
+
+// 點集暫停按鈕
+sto.addEventListener("click", function () {
+    sto.disabled = true;
+    start.disabled = false;
+    // 清除計時器
+    clearInterval(timer);
+});
