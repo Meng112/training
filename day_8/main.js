@@ -140,7 +140,7 @@ let labels_and_counts = function (datas) {
     return { "x_label": x_label, "datas_count": datas_count, };
 };
 
-// 計算 TOP 3 的各個百分比及範圍
+// 計算 TOP 3 的各個百分比及範圍，並連動 Text 值
 let top3 = function () {
     let original_datas = datas["datas_count"]; // 原始的資料
     let copy_datas = original_datas.slice(0); // 拷貝 bar 圖的資料
@@ -157,29 +157,46 @@ let top3 = function () {
         }
     }
 
-// 第一列
-top1_persent = "top1"; // 第一大的值
-top1_range = ""; // 第一大的欄位
-top1_top2_persent = ""; // 第一大跟第二大相減的百分比
-p_1.innerHTML = "第一名 佔整體 " + top1_persent + "% 範圍為 " + top1_range + " 與第二名相差 " + top1_top2_persent + "%";
-// 第二列
-top2_persent = ""; // 第二大的值
-top2_range = ""; // 第二大的欄位
-top2_top3_persent = ""; // 第二大跟第三大相減的百分比
-p_2.innerHTML = "第二名 佔整體 " + top2_persent + "% 範圍為 " + top2_range + " 與第三名相差 " + top2_top3_persent + "%";
-// 第三列
-top3_persent = ""; // 第三大的值
-top3_range = ""; // 第三大的欄位
-p_3.innerHTML = "第三名 佔整體 " + top3_persent + "% 範圍為" + top3_range + "%";
-// 第四列
-top1_top2_5_persent = ""; // 判斷第一大減第二大有沒有相差 5 %
-p_4.innerHTML = "若第一名與第二名相差 5 % 為眾數 第一名 " + top1_top2_5_persent;
-// 第五列
-top1_top3_5_persent = ""; // 判斷第一大減第二大有沒有相差 5 %
-p_5.innerHTML = "若第一名與第三名相差 5 % 為眾數 第一名 " + top1_top3_5_persent;
-    // console.log("top 3 最大值: " + maxs); 
-    // console.log("top 3 最大值的索引: " + maxs_index);
+    // 第一列
+    top1_persent = maxs[0]; // 第一大的值
+    top1_range = datas["x_label"][maxs_index[0]]; // 第一大的欄位
+    top1_top2_persent = (maxs[0] - maxs[1]).toFixed(2); // 第一大跟第二大相減的百分比
+    p_1.innerHTML = "第一名 佔整體 " + top1_persent + "% 範圍為 " + top1_range + " 與第二名相差 " + top1_top2_persent + "%";
 
+    // 第二列
+    top2_persent = maxs[1]; // 第二大的值
+    top2_range = datas["x_label"][maxs_index[1]]; // 第二大的欄位
+    top2_top3_persent = (maxs[1] - maxs[2]).toFixed(2); // 第二大跟第三大相減的百分比
+    p_2.innerHTML = "第二名 佔整體 " + top2_persent + "% 範圍為 " + top2_range + " 與第三名相差 " + top2_top3_persent + "%";
+
+    // 第三列
+    top3_persent = maxs[2]; // 第三大的值
+    top3_range = datas["x_label"][maxs_index[2]]; // 第三大的欄位
+    p_3.innerHTML = "第三名 佔整體 " + top3_persent + "% 範圍為 " + top3_range;
+
+    // 第四列
+    top1_top2_5_persent = (Number(top1_top2_persent) > 5); // 判斷第一大減第二大有沒有相差 5 %
+
+    // 如果第一大減第二大有相差到 5 %
+    if (top1_top2_5_persent) {
+        // 第一大為眾數
+        p_4.innerHTML = "若第一名與第二名相差 5 % 為眾數 第一名 " + "是眾數";
+    } else { // 沒有相差 5 %
+        // 第一大不為眾數
+        p_4.innerHTML = "若第一名與第二名相差 5 % 為眾數 第一名 " + "不是眾數";
+    }
+    // 第五列
+    top1_top3_5_persent = (Number((maxs[0] - maxs[2]).toFixed(2)) > 5); // 判斷第一大減第三大有沒有相差 5 %
+    p_5.innerHTML = "若第一名與第三名相差 5 % 為眾數 第一名 " + top1_top3_5_persent;
+
+    // 如果第一大減第三大有相差到 5 %
+    if (top1_top2_5_persent) {
+        // 第一大為眾數
+        p_5.innerHTML = "若第一名與第三名相差 5 % 為眾數 第一名 " + "是眾數";
+    } else { // 沒有相差 5 %
+        // 第一大不為眾數
+        p_5.innerHTML = "若第一名與第三名相差 5 % 為眾數 第一名 " + "不是眾數";
+    }
 
 };
 
@@ -187,6 +204,8 @@ p_5.innerHTML = "若第一名與第三名相差 5 % 為眾數 第一名 " + top1
 let constantly_updated = function () {
     call_create_data();
     call_get_data();
+    top3();
+    console.log(maxs);
     // 更新 myCh 的資料
     myCh.config._config.data.datasets[0].data = datas.datas_count;
     // 更新 myCh 的 x 軸標籤
@@ -198,10 +217,7 @@ let constantly_updated = function () {
 call_create_data();
 call_get_data();
 top3();
-top1_persent = maxs[0];
-top1_range = maxs_index[0];
-p_1.innerHTML = "第一名 佔整體 " + top1_persent + "% 範圍為 " + top1_range + "% 與第二名相差 " + top1_top2_persent + "%";;
-// top1_range = ;
+
 // 圖表配置
 let config = {
     type: 'bar', // 圖表類型
@@ -256,16 +272,6 @@ let config = {
 
 // 創建圖表
 let myCh = new Chart(ctx, config);
-
-// // 點集開始按鈕
-// start.addEventListener("click", function () {
-//     sto.style.display = "block";
-//     start.disabled = true;
-//     sto.disabled = false;
-//     // 每秒呼叫 create_data
-//     timer = setInterval(constantly_updated, 1000);
-// });
-
 
 // 點集開始按鈕
 start.addEventListener("click", function () {
