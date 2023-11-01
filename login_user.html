@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="common/CommonModule.js" type="text/javascript"></script>
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <link rel="shortcut icon" href="/TsunTienH/img/Wholesenses Logo.jpg" type="image/x-icon" />
+    <title>智慧稽核管理系統</title>
+</head>
+
+<body>
+    <!-- 左 -->
+    <div id="left">
+        <div>
+            <!-- <div id="logopic">
+                <img src="img/logo2.jpg">
+            </div> -->
+            <!-- <div id="comvideo">
+                <video loop="true" autoplay="autoplay" controls muted> -->
+            <!-- <source src="img/tvideo.mp4" type="video/mp4"> -->
+            <!-- </video>
+            </div> -->
+            <!-- 操作人員資料 -->
+            <!-- <div id="userpic">
+                <img src="img/user.jpg">
+            </div> -->
+            <!-- <div id="info">
+                <ul>
+                    <li>登入：<span id="department"></span></li>
+                    <li>密碼：<span id="name"></span></li>
+                    <li>人員工號：<span id="number"></span></li>
+                    <li>人員職能：<span id="user_right"></span></li>
+                </ul>
+            </div> -->
+        </div>
+        <!-- 左邊功能按鈕 -->
+        <div id="left_btn">
+            <div class="left_area_title" id="system_nam">
+                <img src="img/new_add/system_name.png" alt="智慧稽核管理系統" />
+            </div>
+            <div class="left_area" id="login">
+                <div class="login_pw"><img class="login_pw_img" src="img/new_add/login.png" alt="登入" /></div>
+                <input type="text" id="username" name="username" value="黃奎意">
+                <div class="login_pw"><img src="img/new_add/password.png" alt="密碼" /></div>
+                <input type="password" id="password" name="password">
+                <input type="submit" class="left_submit" value="登出">
+            </div>
+            <hr>
+            <div class="left_down_container">
+                <div class="down_button_1">
+                    <div class="midtb m2" id="p5"><img src="img/new_add/auduit_manage_left.png" alt="客戶稽核" /></div>
+                    <div class="midtb m1" id="p5" style="margin-top: -40%;"><img src="img/new_add/company_audit.png"
+                            alt="公司稽核" /></div>
+                </div>
+                <div class="down_button_2">
+                    <div class="midtb m3" id="p5"><img src="img/new_add/comfirm_application.png" alt="確認申調" /></div>
+                    <div id="logopic2"><img src="img/new_add/WSG_LOGO.jpg"></div>
+                </div>
+            </div>
+
+
+
+            <button class="leftb" id="p6">加工動態<br>監管平台</button>
+            <button class="leftb tb2" id="p6">製令執行<br>監管作業</button>
+            <button class="leftb tb3" id="p6">製令完結<br>報工作業</button>
+        </div>
+        <div id="lefticon2">
+            <img src="img/icon2.png">
+        </div>
+        <div id="lefticon">
+            <!-- <img src="img/icon.png"> -->
+        </div>
+        <!-- <div id="logopic2">
+            <img src="img/logo3.png">
+        </div> -->
+    </div>
+    <!-- 中間區塊 -->
+    <div id="middle">
+        <!-- 跑馬燈 -->
+        <!-- <div id="marq">
+            <marquee direction="left" scrollamount="10">跑馬燈測試</marquee>
+        </div> -->
+        <!-- 中間開啟區塊功能按鈕 -->
+        <div class="mid_btn">
+            <div class="mid_btn_1">
+                <div class="midtb m1" id="p4"><img id="img1" src="img/new_add/query_files.png" alt="查詢已預約文件" />
+                </div>
+                <div class="midtb m2" id="p4"><img src="img/new_add/new_audit.png" alt="新稽核文件預約" />
+                </div>
+                <div class="midtb m3" id="p4"><img src="img/new_add/audit_review.png" alt="稽核文件審閱" />
+                </div>
+            </div>
+            <div class="mid_btn_2">
+                <div class="midtb m4" id="p4"><img src="img/new_add/audit_manage.png" alt="客戶稽核表管理" />
+                </div>
+                <div class="midtb m5" id="p4"><img src="img/new_add/function_use.png" alt="功能使用引導影片" />
+                </div>
+            </div>
+            <!-- <button class="midtb m2" id="p4">人員權限<br>管理作業</button>
+            <button class="midtb m3" id="p4">料件圖資<br>管理作業</button>
+            <button class="midtb m4" id="p4">加工標準<br>管理作業</button>
+            <button class="midtb m5" id="p4">加工現況<br>流程路徑</button> -->
+        </div>
+        <!-- 區塊顯示 -->
+        <div id="main"></div>
+        <!-- 對於操作人員紀錄的篩選功能 -->
+        <!-- <table id="changelog">
+            <tr>
+                <td style="border-left: 0px;background-color: #00ff00;color: black;font-weight: 700;">test</td>
+                <td>test</td>
+                <td>test</td>
+                <td>test</td>
+                <td>test</td>
+                <td>test</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+        </table> -->
+        <!-- 操作人員顯示區塊 -->
+        <div id="midbottom">
+            <div id="log_div3">
+                2023/10/16 09:58:54 黃奎意 按下進行<br>
+                2023/10/16 09:58:51 黃奎意 點選5.HSF管理系统 10<br>
+                2023/10/16 09:58:42 黃奎意 按下進行
+            </div>
+        </div>
+    </div>
+    <!-- 右 -->
+    <!-- <div id="right"> -->
+    <!-- 範例影片 -->
+    <!-- <div id="pagevideo">
+            <video loop="true" autoplay="autoplay" controls muted> -->
+    <!-- <source src="img/tvideo2.mp4" type="video/mp4"> -->
+    <!-- </video> -->
+    <!-- <video loop="true" autoplay="autoplay" controls muted> -->
+    <!-- <source src="img/tvideo3.mp4" type="video/mp4"> -->
+    <!-- </video>
+        </div> -->
+    <!-- 暫存閒置網頁區塊以截圖畫面暫存再以點擊後cookie返回當前頁面 -->
+    <!-- <div id="rightmain">
+            <table></table>
+        </div> -->
+    <!-- 操作人員完整記錄log -->
+    <!-- <div id="rightbottom">
+            <video loop="true" autoplay="autoplay" controls muted> -->
+    <!-- <source src="img/tvideo3.mp4" type="video/mp4"> -->
+    <!-- </video>
+        </div> -->
+    <!-- </div> -->
+
+    <!-- <div id="log_div" style="display: block; position: absolute; top: 805px; left: 174px; color: white;">
+        2023/10/13 14:58:39 黃奎意 客戶稽核表管理 上善 上善01 系統偵測缺件 = 2 文件補件清單 警示郵件寄出 <span class="green-text"
+            id="fileLink">文件網址導向點選</span>
+    </div> -->
+
+    <div id="log_div" style="display: none; position: absolute; top: 805px; left: 174px; color: white;">
+        2023/10/13 14:58:39 黃奎意 完成預約客戶稽核 健鼎 新港4 系統偵測缺件 = 0 預約郵件寄出 <span class="green-text" id="fileLink">文件網址導向點選</span>
+    </div>
+
+    <div id="log_div1" style="display: none; position: absolute; top: 764px; left: 174px; color: white;">
+        2023/10/16 09:58:39 黃奎意 客戶名稱 健鼎 所使用的稽核表單號 新港4 預定稽核日期 2023-10-16 申請人 黃奎意<br>
+        2023/10/13 14:58:39 黃奎意 完成預約客戶稽核 健鼎 新港4 系統偵測缺件 = 0 預約郵件寄出 <span class="green-text" id="fileLink">文件網址導向點選</span>
+    </div>
+
+    <div id="log_div2" style="display: none; position: absolute; top: 764px; left: 174px; color: white;">
+        2023/10/16 09:58:42 黃奎意 按下進行<br>
+        2023/10/16 09:58:39 黃奎意 客戶名稱 健鼎 所使用的稽核表單號 新港4 預定稽核日期 2023-10-16 申請人 黃奎意<br>
+        2023/10/13 14:58:39 黃奎意 完成預約客戶稽核 健鼎 新港4 系統偵測缺件 = 0 預約郵件寄出 <span class="green-text" id="fileLink">文件網址導向點選</span>
+    </div>
+
+    <div id="log_div3" style="display: none; position: absolute; top: 764px; left: 174px; color: white;">
+        2023/10/16 09:58:51 黃奎意 點選5.HSF管理系统 10<br>
+        2023/10/16 09:58:42 黃奎意 按下進行<br>
+        2023/10/16 09:58:39 黃奎意 客戶名稱 健鼎 所使用的稽核表單號 新港4 預定稽核日期 2023-10-16 申請人 黃奎意
+    </div>
+
+    <!-- <div id="log_div3" style="display: none; position: absolute; top: 764px; left: 174px; color: white;">
+        2023/10/16 09:58:54 黃奎意 按下進行<br>
+        2023/10/16 09:58:51 黃奎意 點選5.HSF管理系统 10<br>
+        2023/10/16 09:58:42 黃奎意 按下進行
+    </div> -->
+
+    <!-- <div id="log_div4" style="display: none; position: absolute; top: 633px; left: 129px; color: white;">
+        2023/10/16 09:58:54 黃奎意 按下進行<br>
+        2023/10/16 09:58:51 黃奎意 點選5.HSF管理系统 10<br>
+        2023/10/16 09:58:42 黃奎意 按下進行
+    </div> -->
+
+    <div id="log_div5" style="display: none; position: absolute; top: 764px; left: 174px; color: white;">
+        2023/10/16 09:58:59 黃奎意 點選5.HSF管理系统 2<br>
+        2023/10/16 09:58:54 黃奎意 按下進行<br>
+        2023/10/16 09:58:51 黃奎意 點選5.HSF管理系统 10
+    </div>
+
+    <div id="log_div6" style="display: none; position: absolute; top: 764px; left: 174px; color: white;">
+        2023/10/16 09:59:03 黃奎意 按下進行<br>
+        2023/10/16 09:58:59 黃奎意 點選5.HSF管理系统 2<br>
+        2023/10/16 09:58:54 黃奎意 按下進行
+    </div>
+
+    <div id="popup_div" style="display: none;">
+        <div id="popup_title_div">
+            <label for="">客戶稽核檔案上傳</label>
+            <button id="cancel" onclick="popup_close()">X</button>
+        </div>
+
+        <div id="popup_body_div">
+            <label for="upload" style="font-size: 18px;">選擇要上傳的稽核表.&nbsp.&nbsp.&nbsp.&nbsp<br></label>
+            <input type="file" id="fileSelect" accept=".xlsx, .xls, .csv" style="font-size: 14px;">
+            <div id="popup_grandchild_div">
+                <button onclick="upload()" style="font-size: 14px;">確認上傳</button>
+                <button onclick="popup_close()" style="font-size: 14px;">取消</button>
+            </div>
+        </div>
+
+
+    </div>
+    <script>
+        // ini 檔測試
+        // 初始化資料
+        let datas;
+        // 建立 ajax 新連線
+        let request = new XMLHttpRequest();
+        request.onreadystatechange = function () { // 當連線的狀態改變時
+            if (request.readyState == 4 && request.status == 200) {
+                let json_data = request.responseText; // 取得資料
+                // 將 json 字串解析為 javascript 物件
+                datas = JSON.parse(json_data);
+            }
+        }
+        // 指定連線路徑與傳送方式，關閉同步: false (程式會等完連線取得完回應才會進行下一步)
+        request.open("GET", "data.php", false);
+        // 發送請求
+        request.send();
+
+        // // 使用者名子
+        // let user_name = datas["user_information"]["user_name"];
+        // // 使用者電話
+        // let phone_number = datas["user_information"]["phone_number"];
+        // // 使用者地址
+        // let address = datas["user_address"]["user_address"];
+        // // 結果顯示
+        // let result = user_name + " 的電話號碼是: " + phone_number + "\n" + "地址是: " + address;
+        // console.log(result);
+
+
+
+        // 控制圖片切換
+        // 找出所有按鈕
+        // 上面第一個按鈕
+        let m1 = document.getElementsByClassName("m1")[1];
+        // 上面第二個按鈕
+        let m2 = document.getElementsByClassName("m2")[1];
+        // 上面第三個按鈕
+        let m3 = document.getElementsByClassName("m3")[1];
+        // 上面第四個按鈕
+        let m4 = document.getElementsByClassName("m4")[0];
+        // 上面第五個按鈕
+        let m5 = document.getElementsByClassName("m5")[0];
+        // 左下角第一個按鈕
+        let m1_left = document.getElementsByClassName("m2")[0];
+        // 左下角第二個按鈕
+        let m2_left = document.getElementsByClassName("m1")[0];
+        // 左下角第三個按鈕
+        let m3_left = document.getElementsByClassName("m3")[0];
+        // 所有按鈕的儲存空間
+        let m_btn = [m1, m2, m3, m4, m5, m1_left, m2_left, m3_left];
+
+        // 所有按鈕圖片的路徑
+        // 上面第一個按鈕的圖片
+        let m1_img = "img/new_add/query_files.png";
+        // 上面第二個按鈕的圖片
+        let m2_img = "img/new_add/new_audit.png";
+        // 上面第三個按鈕的圖片
+        let m3_img = "img/new_add/audit_review.png";
+        // 上面第四個按鈕的圖片
+        let m4_img = "img/new_add/audit_manage.png";
+        // 上面第五個按鈕的圖片
+        let m5_img = "img/new_add/function_use.png";
+        // 左下角第一個按鈕的圖片
+        let m1_left_img = "img/new_add/audit_manage_left.png";
+        // 左下角第二個按鈕的圖片
+        let m2_left_img = "img/new_add/company_audit.png";
+        // 左下角第三個按鈕的圖片
+        let m3_left_img = "img/new_add/comfirm_application.png";
+
+        // 所有按鈕圖片的儲存空間
+        let m_btn_img = [m1_img, m2_img, m3_img, m4_img, m5_img, m1_left_img, m2_left_img, m3_left_img];
+
+        // 所有按鈕圖片的路徑 (hover)
+        // 上面第一個按鈕的圖片 (hover)
+        let m1_img_hover = "img/new_add/new_add_hover/query_files_hover.png"
+        // 上面第二個按鈕的圖片 (hover)
+        let m2_img_hover = "img/new_add/new_add_hover/new_audit_hover.png";
+        // 上面第三個按鈕的圖片 (hover)
+        let m3_img_hover = "img/new_add/new_add_hover/audit_review_hover.png";
+        // 上面第四個按鈕的圖片 (hover)
+        let m4_img_hover = "img/new_add/new_add_hover/audit_manage_hover.png";
+        // 上面第五個按鈕的圖片 (hover)
+        let m5_img_hover = "img/new_add/new_add_hover/function_use_hover.png";
+        // 左下角第一個按鈕的圖片 (hover)
+        let m1_left_img_hover = "img/new_add/new_add_hover/audit_manage_left_hover.png";
+        // 左下角第二個按鈕的圖片 (hover)
+        let m2_left_img_hover = "img/new_add/new_add_hover/company_audit_hover.png";
+        // 左下角第三個按鈕的圖片 (hover)
+        let m3_left_img_hover = "img/new_add/new_add_hover/comfirm_application_hover.png";
+
+        // 所有按鈕圖片的儲存空間 (hover)
+        let m_btn_img_hover = [m1_img_hover, m2_img_hover, m3_img_hover, m4_img_hover, m5_img_hover, m1_left_img_hover, m2_left_img_hover, m3_left_img_hover];
+        // 被點擊的按鈕編號
+        let clicked = -1;
+        // 逐一跑過所有按鈕 (8個)
+        for (let i = 0; i < 8; i++) {
+            // 按鈕裡面的圖片
+            let img = m_btn[i].childNodes[0];
+            // 滑鼠懸浮到圖片上的函式
+            let fun_0 = function () {
+                // 將圖片路徑更換為 hover 版本的圖片
+                img.src = m_btn_img_hover[i];
+                // 滑鼠樣式
+                m_btn[i].style.cursor = "pointer";
+                // 背景顏色
+                m_btn[i].style.backgroundColor = "#00ff00";
+            }
+            // 當滑鼠移出時的函式
+            let fun_1 = function () {
+                // 換回原本的圖片
+                img.src = m_btn_img[i]
+                // 滑鼠樣式
+                m_btn[i].style.cursor = "default";
+                // 背景顏色
+                m_btn[i].style.backgroundColor = "rgb(74, 74, 74)";
+            }
+
+            // 當滑鼠懸浮到上面時
+            m_btn[i].addEventListener("mouseenter", fun_0)
+
+            // 當滑鼠移出時
+            m_btn[i].addEventListener("mouseout", fun_1)
+
+            // 滑鼠點擊圖片時
+            m_btn[i].addEventListener("click", function () {
+                // 判斷是否有按鈕被點擊
+                if (clicked > -1) {  // 有按鈕被點擊
+                    // 按鈕裡面的圖片
+                    let previous_img = m_btn[clicked].childNodes[0];
+                    let fun_c = function () {
+                        // 將圖片路徑更換為 hover 版本的圖片
+                        previous_img.src = m_btn_img_hover[clicked];
+                        // 滑鼠樣式
+                        m_btn[clicked].style.cursor = "pointer";
+                        // 背景顏色
+                        m_btn[clicked].style.backgroundColor = "#00ff00";
+                    }
+                    let fun_c2 = function () {
+                        // 換回原本的圖片
+                        img.src = m_btn_img[clicked]
+                        // 滑鼠樣式
+                        m_btn[clicked].style.cursor = "default";
+                        // 背景顏色
+                        m_btn[clicked].style.backgroundColor = "rgb(74, 74, 74)";
+                    }
+                    // 新增上一個被點擊過按鈕的滑鼠事件
+                    m_btn[clicked].addEventListener("mouseenter", fun_c);
+                    m_btn[clicked].addEventListener("mouseout", fun_c2);
+                } else { // 沒有按鈕被點擊
+                    // 將圖片路徑更換為 hover 版本的圖片
+                    img.src = m_btn_img_hover[i];
+                    // 滑鼠樣式
+                    m_btn[i].style.cursor = "default";
+                    // 背景顏色
+                    m_btn[i].style.backgroundColor = "#00ff00";
+                    // 刪除自己的滑鼠事件
+                    m_btn[i].removeEventListener("mouseenter", fun_0);
+                    m_btn[i].removeEventListener("mouseout", fun_1);
+                    // 更新被點擊的按鈕編號
+                    clicked = i;
+                }
+            })
+        }
+
+
+
+        function upload() {
+            $("#popup_div").hide();
+            alert("檔案上傳成功!");
+
+        }
+        function popup_close() {
+            $("#popup_div").hide();
+        }
+        // ---------------------------------神燈精靈---------------------------------
+        $("#lefticon2").hide();
+        $("#lefticon").click(function () {
+            $("#lefticon2").toggle(1000);
+        })
+        $(".m2").click(function () {
+            $("#main").html("<iframe id='m2' src='m2.html'></iframe>");
+            $(this).css("background-color", "#00ff00");
+            $(this).css("color", "black");
+            $(this).css("font-weight", "700");
+            $(".m1, .m3, .m4, .m5").css("background-color", "#4a4a4a");
+            $(".m1, .m3, .m4, .m5").css("color", "white");
+        })
+        // ---------------------------------料件管理---------------------------------
+        // $(".m3").click(function () {
+        //     $("#main").html("<iframe id='m3' src='m3.html'></iframe>");
+        //     $(this).css("background-color", "#00ff00");
+        //     $(this).css("color", "black");
+        //     $(this).css("font-weight", "700");
+        //     $(".m1, .m2, .m4, .m5").css("background-color", "#4a4a4a");
+        //     $(".m1, .m2, .m4, .m5").css("color", "white");
+        // })
+        // ---------------------------------操作人員記錄---------------------------------
+        $(".m5").click(function () {
+            $("#main").html("<iframe id='m3' src='m5.html'></iframe>");
+            $(this).css("background-color", "#00ff00");
+            $(this).css("color", "black");
+            $(this).css("font-weight", "700");
+            $(".m1, .m2, .m4, .m3").css("background-color", "#4a4a4a");
+            $(".m1, .m2, .m4, .m3").css("color", "white");
+        })
+        // ---------------------------------操作人員記錄---------------------------------
+        // $(".m1").click(function () {
+        //     $("#main").html("<iframe id='m1' src='DAS_C_16949_90012.php'></iframe>");
+        //     $(this).css("background-color", "#00ff00");
+        //     $(this).css("color", "black");
+        //     $(this).css("font-weight", "700");
+        //     $(".m3, .m2, .m4, .m5").css("background-color", "#4a4a4a");
+        //     $(".m3, .m2, .m4, .m5").css("color", "white");
+        // })
+
+        // 因原本用文字方式，後調整為圖片排版(不會跑掉)，在點擊後對圖片做調整
+        $(".m1").click(function () {
+
+            $("#main").html("<iframe id='m1' src='DAS_16949_bookedaud.php'></iframe>");
+
+            var iframeSrc = "DAS_16949_9001_mainscreen.php";
+            $(this).css("background-color", "#00ff00");
+            // $(this).css("color", "black");
+            // $(this).css("font-weight", "700");
+            $(".m3, .m2, .m4, .m5").css("background-color", "#4a4a4a");
+            $(".m3, .m2, .m4, .m5").css("color", "white");
+        })
+        $(".m2").click(function () {
+            $("#main").html("<iframe id='m1' src='DAS_16949_auditList.php'></iframe>");
+
+            $(this).css("background-color", "#00ff00");
+            $(this).css("color", "black");
+            $(this).css("font-weight", "700");
+            $(".m1, .m3, .m4, .m5").css("background-color", "#4a4a4a");
+            $(".m1, .m3, .m4, .m5").css("color", "white");
+        })
+
+        $(".m3").click(function () {
+            $("#main").html("<iframe id='m3' src='DAS_C_16949_90012.php'></iframe>");
+
+            // var iframeSrc = "DAS_16949_9001_mainscreen.php";
+            $(this).css("background-color", "#00ff00");
+            $(this).css("color", "black");
+            $(this).css("font-weight", "700");
+            $(".m1, .m2, .m4, .m5").css("background-color", "#4a4a4a");
+            $(".m1, .m2, .m4, .m5").css("color", "white");
+        })
+
+        $(".m4").click(function () {
+            $("#popup_div").toggle();
+
+            $(this).css("background-color", "#00ff00");
+            $(this).css("color", "black");
+            $(this).css("font-weight", "700");
+
+            $(".m1, .m2, .m3, .m5").css("background-color", "#4a4a4a");
+            $(".m1, .m2, .m3, .m5").css("color", "white");
+        })
+        //
+
+        $("button").click(function () {
+            var dt = new Date();
+            var time = dt.toLocaleString();
+            $("#midbottom").prepend("<p>" + time + "&ensp;" + decodeURI(getCookie(system_nam + "username")) + "使用" + $(this).text() + "</p>")
+        })
+        $("#lefticon").click(function () {
+            var dt = new Date();
+            var time = dt.toLocaleString();
+            $("#midbottom").prepend("<p>" + time + "&ensp;" + decodeURI(getCookie(system_nam + "username")) + "喚醒作業領航精靈</p>")
+        })
+
+
+        var Midnight = new Date(new Date(new Date().toLocaleDateString()).getTime() + 24 * 60 * 60 * 1000 - 1);
+
+        var system_nam = "村田精密";
+        document.getElementById('name').innerHTML = decodeURI(getCookie(system_nam + "username"));
+        document.getElementById('number').innerHTML = decodeURI(getCookie(system_nam + "user_id"));
+        document.getElementById('user_right').innerHTML = decodeURI(getCookie(system_nam + "permission"));
+        document.getElementById('department').innerHTML = decodeURI(getCookie(system_nam + "department"));
+
+        var styleSheet = document.styleSheets[0]; // 取得第一個樣式表
+
+        // 選取所有 button 元素，並返回一個 HTMLCollection
+        var buttons = document.getElementsByTagName('button');
+
+        //抓各按鈕的value
+
+        var btn_p = 0;
+        var btn_grade_xhr = new XMLHttpRequest(); //去SQL撈資料判讀名稱和頁面
+        btn_grade_xhr.onreadystatechange = function () {
+            if (btn_grade_xhr.readyState === 4 && btn_grade_xhr.status === 200) {
+                // Success
+                var btn_grade_xhr_result = JSON.parse(btn_grade_xhr.responseText);//解析資料為JSON
+
+                // 使用 for 迴圈進行遍歷，對每個按鈕進行操作
+                for (var i = 0; i < buttons.length; i++) { //針對每個按鈕給予按鈕值(權限)
+                    for (let j = 0; j < btn_grade_xhr_result.length; j++) { //看有幾個這個頁面的按鈕
+                        (function (index) {
+                            buttons[index].addEventListener('mouseover', function () {
+                                // console.log(btn_grade_xhr_result[j].ButtonName == buttons[index].className)
+                                if (btn_grade_xhr_result[j].ButtonName == buttons[index].className) {
+                                    document.getElementsByClassName(btn_grade_xhr_result[j].ButtonName)[0].value = btn_grade_xhr_result[j].ButtonGrade;
+                                    document.getElementsByClassName(btn_grade_xhr_result[j].ButtonName)[0].id = "p" + btn_grade_xhr_result[j].ButtonGrade;
+                                }
+                                btn_p = buttons[index].value;
+                                for (var a = styleSheet.rules.length - 1; a > 0; a--) {
+                                    if (styleSheet.rules[a].selectorText === "#p" + btn_p + ":hover") {
+
+                                        ruleIndexes = a;
+
+                                        break;
+                                    }
+                                }
+                                if (buttons[index].value < decodeURI(getCookie(system_nam + "permission")) && buttons[index].value != "") { //按鈕職權 > 使用權限 就不能按
+                                    console.log(buttons[index].value);
+                                    styleSheet.rules[ruleIndexes].style.cursor = "no-drop";
+                                    styleSheet.rules[ruleIndexes].style.background = "#52514f";
+                                    styleSheet.rules[ruleIndexes].style.color = "#ffffff";
+                                    styleSheet.rules[ruleIndexes].style.border = "0.5px solid rgba(255, 255, 255, 0.588)";
+                                    buttons[index].disabled = true;
+                                }
+                            });
+                        })(i);
+                    }
+                }
+
+            }
+        };
+        btn_grade_xhr.open('POST', 'user.php');
+        btn_grade_xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        btn_grade_xhr.send();
+
+        //如果修改使用者為自己 讓他重新登入
+        function navigateToOtherWebsite() {
+
+            $("#main").html("<iframe id='m3' src='DAS_C_16949_90012.php'></iframe>");
+
+            $(".m3").css("background-color", "#00ff00");
+            $(".m3").css("color", "black");
+            $(".m3").css("font-weight", "700");
+
+            $(".m1, .m2, .m4, .m5").css("background-color", "#4a4a4a");
+            $(".m1, .m2, .m4, .m5").css("color", "white");
+        }
+
+        function navigateToOtherWebsite1() {
+            var logDiv = document.getElementById('log_div');
+            if (logDiv) {
+                logDiv.style.display = 'block';
+                $(document).ready(function () {
+                    // console.log("document is ready!!!!!")
+                    $("#fileLink").click(function () {
+                        $("#p4.midtb.m1").click();
+                    });
+                });
+            }
+        }
+
+        function navigateToOtherWebsite2() {
+            var logDiv = document.getElementById('log_div');
+            var logDiv1 = document.getElementById('log_div1');
+            if (logDiv1) {
+                logDiv.style.display = 'none';
+                logDiv1.style.display = 'block';
+                $(document).ready(function () {
+                    // console.log("document is ready!!!!!")
+                    $("#fileLink").click(function () {
+                        $("#p4.midtb.m1").click();
+                    });
+                });
+            }
+        }
+
+        function navigateToOtherWebsite3() {
+            var logDiv = document.getElementById('log_div');
+            var logDiv1 = document.getElementById('log_div1');
+            var logDiv2 = document.getElementById('log_div2');
+            if (logDiv2) {
+                logDiv.style.display = 'none';
+                logDiv1.style.display = 'none';
+                logDiv2.style.display = 'block';
+                $(document).ready(function () {
+                    // console.log("document is ready!!!!!")
+                    $("#fileLink").click(function () {
+                        $("#p4.midtb.m1").click();
+                    });
+                });
+            }
+        }
+
+        function navigateToOtherWebsite4() {
+            var logDiv = document.getElementById('log_div');
+            var logDiv1 = document.getElementById('log_div1');
+            var logDiv2 = document.getElementById('log_div2');
+            var logDiv3 = document.getElementById('log_div3');
+            if (logDiv3) {
+                logDiv.style.display = 'none';
+                logDiv1.style.display = 'none';
+                logDiv2.style.display = 'none';
+                logDiv3.style.display = 'block';
+                $(document).ready(function () {
+                    // console.log("document is ready!!!!!")
+                    $("#fileLink").click(function () {
+                        $("#p4.midtb.m1").click();
+                    });
+                });
+            }
+        }
+
+
+        function navigateToOtherWebsite5() {
+            var logDiv = document.getElementById('log_div');
+            var logDiv1 = document.getElementById('log_div1');
+            var logDiv2 = document.getElementById('log_div2');
+            var logDiv3 = document.getElementById('log_div3');
+            var logDiv4 = document.getElementById('log_div4');
+            if (logDiv4) {
+                logDiv.style.display = 'none';
+                logDiv1.style.display = 'none';
+                logDiv2.style.display = 'none';
+                logDiv3.style.display = 'none';
+                logDiv4.style.display = 'block';
+                $(document).ready(function () {
+                    // console.log("document is ready!!!!!")
+                    $("#fileLink").click(function () {
+                        $("#p4.midtb.m1").click();
+                    });
+                });
+            }
+        }
+
+
+        function navigateToOtherWebsite6() {
+            var logDiv = document.getElementById('log_div');
+            var logDiv1 = document.getElementById('log_div1');
+            var logDiv2 = document.getElementById('log_div2');
+            var logDiv3 = document.getElementById('log_div3');
+            var logDiv4 = document.getElementById('log_div4');
+            var logDiv5 = document.getElementById('log_div5');
+            if (logDiv5) {
+                logDiv.style.display = 'none';
+                logDiv1.style.display = 'none';
+                logDiv2.style.display = 'none';
+                logDiv3.style.display = 'none';
+                logDiv4.style.display = 'none';
+                logDiv5.style.display = 'block';
+                $(document).ready(function () {
+                    // console.log("document is ready!!!!!")
+                    $("#fileLink").click(function () {
+                        $("#p4.midtb.m1").click();
+                    });
+                });
+            }
+        }
+
+        function navigateToOtherWebsite7() {
+            var logDiv = document.getElementById('log_div');
+            var logDiv1 = document.getElementById('log_div1');
+            var logDiv2 = document.getElementById('log_div2');
+            var logDiv3 = document.getElementById('log_div3');
+            var logDiv4 = document.getElementById('log_div4');
+            var logDiv5 = document.getElementById('log_div5');
+            var logDiv6 = document.getElementById('log_div6');
+            if (logDiv6) {
+                logDiv.style.display = 'none';
+                logDiv1.style.display = 'none';
+                logDiv2.style.display = 'none';
+                logDiv3.style.display = 'none';
+                logDiv4.style.display = 'none';
+                logDiv5.style.display = 'none';
+                logDiv6.style.display = 'block';
+                $(document).ready(function () {
+                    // console.log("document is ready!!!!!")
+                    $("#fileLink").click(function () {
+                        $("#p4.midtb.m1").click();
+                    });
+                });
+            }
+        }
+        // document.cookie = "UserName=" + $("#name").html() + ";expires=" + Midnight.toUTCString();
+
+    </script>
+</body>
+
+</html>
