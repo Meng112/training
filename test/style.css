@@ -1,0 +1,46 @@
+#con {
+    padding: 0;
+    list-style: none;
+    border: 1px solid black;
+    display: inline-block;
+    font-size: 5vmin;
+    margin: 0;
+    margin-left: 48vmin;
+    margin-top: 24vmin;
+}
+
+li {
+    white-space: nowrap;
+    border: 1px solid black;
+    list-style: none;
+}
+.list {
+    white-space: nowrap;
+    border: 1px solid black;
+    list-style: none;
+    margin-top: 1vmin;
+    margin-left: -5vmin;
+}
+
+a {
+    display: block;
+    padding: 0 30px;
+    text-decoration: none;
+    line-height: 83px;
+}
+a:hover {
+    color: red;
+}
+
+/* 包裹內層的選單 */
+#container_in {
+    position: absolute;
+    z-index: 99;
+    top: 23.5vmin;
+    left: 65vmin;
+    display: none;
+}
+/* 最外層的選項 */
+#container_out:hover > #container_in { /* 滑鼠滑入展開次選單*/
+    display: block;
+}
